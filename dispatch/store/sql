@@ -1,0 +1,13 @@
+CREATE TABLE `serverless_grayscale_module_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `appId` bigint(20) NOT NULL,
+  `region` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `namespace` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `module` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+	`status` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+	`lastVersion` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '$LATEST',
+  `addTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `module_index` (`appId`, `region`, `namespace`, `module`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=107752 DEFAULT CHARSET=utf8;

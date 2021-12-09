@@ -1,0 +1,78 @@
+component: multi-scf
+name: live-stream
+app: ${env:NAME}
+inputs:
+  src:
+    src: ./
+    exclude:
+      - .env
+      - node_modules/**
+      - dist/**
+      - scripts/**
+  region: '${env:REGION}'
+  runtime: python3.6
+  role: SCF_QcsRole
+  memorySize: 256
+  isAutoPublish: true
+  timeout: 90
+  msgTTL: 21600
+  retryNum: 0
+  vpc:
+    vpcId: '${env:VPC_ID}'
+    subnetId: '${env:SUBNET_ID}'
+  environments:
+    - key: SLS_APP_NAME
+      value: '${app}'
+    - key: ENV
+      value: '${env:ENV}'
+    - key: APP_VERSION
+      value: '${env:APP_VERSION}'
+    - key: VPC_ID
+      value: '${env:VPC_ID}'
+    - key: SUBNET_ID
+      value: '${env:SUBNET_ID}'
+    - key: REGION
+      value: '${env:REGION}'
+    - key: REDIS_HOST
+      value: '${env:REDIS_HOST}'
+    - key: REDIS_PORT
+      value: '${env:REDIS_PORT}'
+    - key: REDIS_AUTH
+      value: '${env:REDIS_AUTH}'
+    - key: REDIS_INDEX
+      value: '${env:REDIS_INDEX}'
+    - key: WOKER_NAME
+      value: '${app}-${name}-worker'
+  functions:
+    - name: '${app}-${name}-dispatch'
+      src: ./dispatch
+      handler: index.main_handler
+      memorySize: 512
+      asyncRunEnable: true
+      traceEnable: true
+    - name: '${app}-${name}-worker'
+      src: ./worker
+      handler: index.main_handler
+      memorySize: 512
+      timeout: 7200
+      asyncRunEnable: true
+      traceEnable: true
+  triggers:
+    - type: apigw
+      parameters:
+        name: web_record
+        protocols:
+          - http
+          - https
+        description: Serverless web-record API GW
+        environment: release
+        apis:
+          - path: /stream
+            apiName: dispatch_api
+            method: POST
+            description: Serverless REST API
+            enableCORS: true
+            responseType: JSON
+            serviceTimeout: 90
+            authType: APP
+            function: '${app}-${name}-dispatch'
