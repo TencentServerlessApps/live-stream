@@ -11,10 +11,10 @@ class RedisClient:
 
     def __init__(self):
         redis_setting = dict(
-            host=os.environ.get('RedisHost'),
-            port=int(os.environ.get('RedisPort')),
-            password=os.environ.get('RedisPwd'),
-            db=int(os.environ.get('RedisDB')),
+            host=os.environ.get('REDIS_HOST'),
+            port=int(os.environ.get('REDIS_PORT')),
+            password=os.environ.get('REDIS_AUTH'),
+            db=int(os.environ.get('REDIS_INDEX')),
             decode_responses=True,
             socket_timeout=RedisTimeout,
             socket_connect_timeout=RedisConnectionTimeout,

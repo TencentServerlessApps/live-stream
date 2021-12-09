@@ -33,8 +33,8 @@ class CreateStreamRequest(RequestBaseMethod):
             'SourceType': StringModule(name='SourceType', data=data.get('SourceType', ''),
                                        option=self._source_type_validate),
             'SourceUrl': StringModule(name='SourceUrl', data=data.get('SourceUrl', None), null=True),
-            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', None), null=True),
-            'Loop': IntModule(name='Loop', data=data.get('Loop', None), null=True),
+            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', []), null=True),
+            'Loop': IntModule(name='Loop', data=data.get('Loop', 1), null=True),
             'CallbackUrl': StringModule(name='CallbackUrl', data=data.get('CallbackUrl', '')),
             'Outputs': ObjectIterableModule(name='Outputs', data={
                 'Type': StringModule(name='Type', data=data.get('Outputs', {}).get('Type', ''),
@@ -101,6 +101,8 @@ class CreatePresetStreamRequest(CreateStreamRequest):
             'SourceType': StringModule(name='SourceType', data=data.get('SourceType', ''),
                                        option=self._source_type_validate),
             'SourceUrl': StringModule(name='SourceUrl', data=data.get('SourceUrl', '')),
+            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', []), null=True),
+            'Loop': IntModule(name='Loop', data=data.get('Loop', 1), null=True),
             'CallbackUrl': StringModule(name='CallbackUrl', data=data.get('CallbackUrl', '')),
             'Outputs': ObjectIterableModule(name='Outputs', data={
                 'Type': StringModule(name='Type', data=data.get('Outputs', {}).get('Type', ''),

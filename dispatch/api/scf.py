@@ -22,7 +22,7 @@ def qcloud_caller(action, call_params={}, req_timeout=5):
         token = os.getenv("TENCENTCLOUD_SESSIONTOKEN")
         user_cred = credential.Credential(secret_id, secret_key, token)
 
-    region = os.environ.get('WorkerRegion')
+    region = os.getenv("TENCENTCLOUD_REGION")
 
     result = {
         'success': True,

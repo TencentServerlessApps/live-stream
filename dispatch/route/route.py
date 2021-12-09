@@ -1,6 +1,6 @@
 # coding:utf-8
 
-from dispatch.workplace.create_live_pull_stream import CreateLivePullStreamTaskWorker
+from workplace.create_live_pull_stream import CreateLivePullStreamTaskWorker
 from workplace.terminate_live_pull_stream import TerminateLivePullStreamTaskWorker
 from workplace.pause_live_pull_stream import PauseLivePullStreamTaskWorker
 from workplace.resume_live_pull_stream import ResumeLivePullStreamTaskWorker
