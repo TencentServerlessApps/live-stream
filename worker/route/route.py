@@ -13,7 +13,7 @@ def get_process_list(process, before=None, after=None):
 
 WORKER_MAP = {
     'PullLivePushLive': RtmpToRtmpHandler,
-    'PullVideoPushLive': VodToRtmpHandler
+    'PullVodPushLive': VodToRtmpHandler
 }
 
 

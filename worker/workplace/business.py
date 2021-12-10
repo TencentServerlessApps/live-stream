@@ -186,7 +186,7 @@ class MainHandler(BaseWorker):
         is_stream_init = True
         sig = FFmpegNormalTerminateSig
         monitor_control['ffmpeg_exit_by_monitor'] = False
-        if "SourceUrls" in self.task_struct:
+        if self.task_struct.get("SourceUrls"):
             self.ffmpeg_cmds()
         else:
             self.ffmpeg_cmd()

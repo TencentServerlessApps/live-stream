@@ -29,5 +29,5 @@ ResumeSig = 'resume'
 TerminateSig = 'term'
 RefreshSig = 'update'
 
-VideoToRtmp = 'PullVideoPushLive'
+VideoToRtmp = 'PullVodPushLive'
 RtmpToRtmp = 'PullLivePushLive'

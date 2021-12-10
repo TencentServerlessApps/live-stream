@@ -16,7 +16,7 @@ data = {
                     'StartLive': 0,
                     'TargetUrls': ['rtmp://66679.livepush.myqcloud.com/live/new?txSecret=954b8eef45004933d3d16afdbe7e093a&txTime=617E3E3B'],
                     'Type': 'rtmp'},
-        'SourceType': 'PullVideoPushLive',
+        'SourceType': 'PullVodPushLive',
         'SourceUrl': 'https://chris-demo-test-1253970226.cos.ap-beijing.myqcloud.com/test.mp4'
     }
 }

@@ -33,8 +33,8 @@ class CreateStreamRequest(RequestBaseMethod):
             'SourceType': StringModule(name='SourceType', data=data.get('SourceType', ''),
                                        option=self._source_type_validate),
             'SourceUrl': StringModule(name='SourceUrl', data=data.get('SourceUrl', None), null=True),
-            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', []), null=True),
-            'Loop': IntModule(name='Loop', data=data.get('Loop', 1), null=True),
+            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', []), empty=True),
+            'Loop': IntModule(name='Loop', data=data.get('Loop', 1), empty=True),
             'CallbackUrl': StringModule(name='CallbackUrl', data=data.get('CallbackUrl', '')),
             'Outputs': ObjectIterableModule(name='Outputs', data={
                 'Type': StringModule(name='Type', data=data.get('Outputs', {}).get('Type', ''),
@@ -87,7 +87,7 @@ class CreateStreamRequest(RequestBaseMethod):
 
     @staticmethod
     def _source_type_validate(key, data):
-        if data not in ['PullLivePushLive', 'PullVideoPushLive']:
+        if data not in ['PullLivePushLive', 'PullVodPushLive']:
             code = 'InvalidParameter.{key}'.format(key=key)
             message = 'The parameter {key} do not match the specification'.format(key=key)
             raise BaseError(code=code, message=message)
@@ -101,8 +101,8 @@ class CreatePresetStreamRequest(CreateStreamRequest):
             'SourceType': StringModule(name='SourceType', data=data.get('SourceType', ''),
                                        option=self._source_type_validate),
             'SourceUrl': StringModule(name='SourceUrl', data=data.get('SourceUrl', '')),
-            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', []), null=True),
-            'Loop': IntModule(name='Loop', data=data.get('Loop', 1), null=True),
+            'SourceUrls': ListModule(name='SourceUrls', data=data.get('SourceUrls', []), empty=True),
+            'Loop': IntModule(name='Loop', data=data.get('Loop', 1), empty=True),
             'CallbackUrl': StringModule(name='CallbackUrl', data=data.get('CallbackUrl', '')),
             'Outputs': ObjectIterableModule(name='Outputs', data={
                 'Type': StringModule(name='Type', data=data.get('Outputs', {}).get('Type', ''),
@@ -245,7 +245,7 @@ if __name__ == "__main__":
     import pprint
     c = CreateStreamRequest(data={
         'JobName': 'dd',
-        'SourceType': 'PullVideoPushLive',
+        'SourceType': 'PullVodPushLive',
         'SourceUrl': 'sadfdsaf',
         'CallbackUrl': 'dsafdsaf',
         'Outputs': {
