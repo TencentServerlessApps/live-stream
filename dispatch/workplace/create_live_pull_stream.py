@@ -164,14 +164,17 @@ class CreateLivePullStreamTaskWorker(BaseWorker):
                 "TargetUrls": create_stream_data['Outputs']['TargetUrls'],
                 "CreateTime": create_time,
             }
-            if 'SourceUrl' in create_stream_data:
+            if 'SourceUrl' in create_stream_data and create_stream_data['SourceUrl'] != "":
                 job_metadata["SourceUrl"] = create_stream_data['SourceUrl']
-            if 'SourceUrls' in create_stream_data:
+            logger.info("create_stream_data['SourceUrls']:"+ str(create_stream_data['SourceUrls']))
+            if 'SourceUrls' in create_stream_data and len(create_stream_data['SourceUrls']) > 0:
                 job_metadata["SourceUrls"]  = create_stream_data['SourceUrls']
             if 'Loop' in create_stream_data:
                 job_metadata["Loop"]  = create_stream_data['Loop']
-            if 'CallbackUrl' in create_stream_data:
+            if 'CallbackUrl' in create_stream_data and create_stream_data['CallbackUrl'] != "":
                 job_metadata["CallbackUrl"] = create_stream_data['CallbackUrl']
+            if 'TranscodeParams' in create_stream_data and create_stream_data['TranscodeParams'] != "":
+                job_metadata["TranscodeParams"] = create_stream_data['TranscodeParams']
             if 'FailureRetryTimes' in create_stream_data:
                 job_metadata["FailureRetryTimes"]  = create_stream_data['FailureRetryTimes']
             if 'StreamIdleTimeout' in create_stream_data:
@@ -210,14 +213,16 @@ class CreateLivePullStreamTaskWorker(BaseWorker):
                     'WorkType': create_stream_data['SourceType'],
                     'TaskId': task_id,
                 }
-                if 'SourceUrl' in create_stream_data:
+                if 'SourceUrl' in create_stream_data and create_stream_data['SourceUrl'] != "":
                     task_metadata["SourceUrl"] = create_stream_data['SourceUrl']
-                if 'SourceUrls' in create_stream_data:
+                if 'SourceUrls' in create_stream_data and len(create_stream_data['SourceUrls']) >0:
                     task_metadata["SourceUrls"]  = create_stream_data['SourceUrls']
                 if 'Loop' in create_stream_data:
                     task_metadata["Loop"]  = create_stream_data['Loop']
-                if 'CallbackUrl' in create_stream_data:
+                if 'CallbackUrl' in create_stream_data and create_stream_data['CallbackUrl'] != "":
                     task_metadata["CallbackUrl"] = create_stream_data['CallbackUrl']
+                if 'TranscodeParams' in create_stream_data and create_stream_data['TranscodeParams'] != "":
+                    task_metadata["TranscodeParams"] = create_stream_data['TranscodeParams']
                 if 'StartLive' in create_stream_data['Outputs']:
                     task_metadata["StreamHandlerStart"] = create_stream_data['Outputs']['StartLive']
                 if 'Duration' in create_stream_data['Outputs']:

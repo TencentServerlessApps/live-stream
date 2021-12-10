@@ -31,11 +31,11 @@ FFmpegRtmpToRtmp = "/var/user/ffmpeg -fflags nobuffer -rw_timeout {stream_idle_t
                    "{target_url}"
 FFmpegVodToRtmp = "/var/user/ffmpeg -re -reconnect 1 -rw_timeout 30000000 -reconnect_at_eof 1 -reconnect_streamed 1 " \
                   "-reconnect_delay_max 2 {offset_config} -i {source_url} " \
-                  "-c copy -f flv -flvflags no_duration_filesize " \
+                  "{transcode_params} -f flv -flvflags no_duration_filesize " \
                   "{target_url}"
 
 FFmpegVodsToRtmp = "/var/user/ffmpeg -v verbose -f concat -safe 0 -protocol_whitelist file,http,tcp,https,tls " \
-                   "-re -i {file_path} -c:a aac -c:v h264 -f flv -flvflags no_duration_filesize" \
+                   "-re -i {file_path} {transcode_params} -f flv -flvflags no_duration_filesize" \
                    "{target_url}"
 FFmpegJobRetry = 3
 FFmpegErrorExitCode = 1

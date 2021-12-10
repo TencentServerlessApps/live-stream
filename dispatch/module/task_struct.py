@@ -24,9 +24,12 @@ class JobStruct:
                     "StartLive": metadata.get("StartLive", 0),
                     "SourceType": metadata.get("SourceType", ''),
                     "SourceUrl": metadata.get("SourceUrl", ''),
+                    "Loop": metadata.get("Loop", 1),
+                    "SourceUrls": metadata.get("SourceUrl", []),
                     "TargetUrls": metadata.get("TargetUrls", []),
                     "TaskIds": metadata.get("TaskIds", []),
                     "CallbackUrl": metadata.get("CallbackUrl", ''),
+                    "TranscodeParams": metadata.get("TranscodeParams", ''),
                     "StreamHandlerStart": metadata.get("StreamHandlerStart", 0),
                     "StreamHandlerDuration": metadata.get("StreamHandlerDuration", 0),
                     "FailureRetryTimes": metadata.get("FailureRetryTimes", 0),
@@ -78,8 +81,11 @@ class TaskStruct:
                 "RequestId": metadata.get("RequestId", None),
                 "SourceType": metadata.get("SourceType", None),
                 "SourceUrl": metadata.get("SourceUrl", None),
+                "SourceUrls": metadata.get("SourceUrls", None),
                 "TargetUrl": metadata.get("TargetUrl", None),
+                "Loop": metadata.get("Loop", None),
                 "CallbackUrl": metadata.get("CallbackUrl", None),
+                "TranscodeParams": metadata.get("TranscodeParams", None),
                 "TaskStartTime": metadata.get("StartTime", None),
                 "TaskPausedTime": metadata.get("PausedTime", None),
                 "TaskFinishTime": metadata.get("FinishTime", None),
@@ -112,25 +118,23 @@ class TaskStruct:
 
 if __name__ == "__main__":
     metadata = {
-                "JobId": "JobId",
-                "TaskId": "TaskId",
-                "RequestId": "RequestId",
-                "SourceType": "SourceType",
-                "SourceUrl": "SourceUrl",
-                "TargetUrl": "TargetUrl",
-                "CallbackUrl": "CallbackUrl",
-                "TaskStartTime": "StartTime",
-                "TaskPausedTime": "PausedTime",
-                "TaskFinishTime": "FinishTime",
-                "Status": "Status",
-                "StreamHandlerStart": "StreamHandlerStart",
-                "StreamHandlerDuration": "StreamHandlerDuration",
-                "ErrorMessage": "ErrorMessage",
-                "LastUpdateTime": 123456
+        "JobId": "JobId",
+        "TaskId": "TaskId",
+        "RequestId": "RequestId",
+        "SourceType": "SourceType",
+        "SourceUrl": "SourceUrl",
+        "TargetUrl": "TargetUrl",
+        "CallbackUrl": "CallbackUrl",
+        "TaskStartTime": "StartTime",
+        "TaskPausedTime": "PausedTime",
+        "TaskFinishTime": "FinishTime",
+        "Status": "Status",
+        "StreamHandlerStart": "StreamHandlerStart",
+        "StreamHandlerDuration": "StreamHandlerDuration",
+        "ErrorMessage": "ErrorMessage",
+        "LastUpdateTime": 123456
     }
 
     task_status = TaskStruct(metadata=metadata, data_sync_client=None)
 
     print(task_status.LastUpdateTime)
-
-

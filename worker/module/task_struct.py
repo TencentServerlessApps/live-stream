@@ -23,6 +23,7 @@ class TaskStruct:
                 "SourceUrl": metadata.get("SourceUrl", None),
                 "TargetUrl": metadata.get("TargetUrl", None),
                 "CallbackUrl": metadata.get("CallbackUrl", None),
+                "TranscodeParams": metadata.get("TranscodeParams", None),
                 "TaskStartTime": metadata.get("StartTime", None),
                 "TaskPausedTime": metadata.get("PausedTime", None),
                 "TaskFinishTime": metadata.get("FinishTime", None),

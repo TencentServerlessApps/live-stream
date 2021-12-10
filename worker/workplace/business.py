@@ -401,7 +401,7 @@ class MainHandler(BaseWorker):
         self.callback(data)
 
     def callback(self, data):
-        callback_url = self.task_struct.get('CallbackUrl', None)
+        callback_url = self.task_struct.get('CallbackUrl')
         if callback_url is None:
             logger.info(msg='[{time} {task_id} CallbackUrlNotSet]'.format(
                 time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -432,6 +432,7 @@ class VodToRtmpHandler(MainHandler):
 
         stream_handler_duration = int(self.task_struct.get('StreamHandlerDuration'))
         stream_handler_start = int(self.task_struct.get('StreamHandlerStart'))
+        transcode_params = self.task_struct.get('TranscodeParams')
 
         if stream_handler_duration == 0:
             offset_config = '-ss {handler_start}'.format(
@@ -442,10 +443,12 @@ class VodToRtmpHandler(MainHandler):
                 handler_start=stream_handler_start,
                 handler_duration=stream_handler_duration
             )
-
+        if transcode_params is None:
+            transcode_params = "-c copy"
         cmd_origin = FFmpegVodToRtmp
         cmd = cmd_origin.format(offset_config=offset_config,
                                 source_url=self.task_struct.get('SourceUrl'),
+                                transcode_params=transcode_params,
                                 target_url=self.task_struct.get('TargetUrl'))
         logger.info(msg='[{time} {task_id} FFmpeg Cmd] {message}'.format(
             time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -458,7 +461,7 @@ class VodToRtmpHandler(MainHandler):
         source_urls=self.task_struct.get('SourceUrls'),
         stream_handler_duration = int(self.task_struct.get('StreamHandlerDuration'))
         stream_handler_start = int(self.task_struct.get('StreamHandlerStart'))
-
+        transcode_params = self.task_struct.get('TranscodeParams')
         if stream_handler_duration == 0:
             offset_config = '-ss {handler_start}'.format(
                 handler_start=stream_handler_start
@@ -468,7 +471,8 @@ class VodToRtmpHandler(MainHandler):
                 handler_start=stream_handler_start,
                 handler_duration=stream_handler_duration
             )
-
+        if transcode_params is None:
+            transcode_params = "-c copy"
         cmd_origin = FFmpegVodsToRtmp
         local_path = '/tmp/local_file.txt'
         if os.path.exists(local_path):
@@ -479,6 +483,7 @@ class VodToRtmpHandler(MainHandler):
             f.write("file "+ source_url)
             f.write("\n")
         cmd = cmd_origin.format(file_path=local_path,
+                                transcode_params=transcode_params,
                                 target_url=self.task_struct.get('TargetUrl'))
         logger.info(msg='[{time} {task_id} FFmpeg Cmds] {message}'.format(
             time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
