@@ -119,7 +119,7 @@ class CreateLivePullStreamTaskWorker(BaseWorker):
                 err_message = "SourceType is empty"
             if 'SourceUrl' not in create_stream_data and 'SourceUrls' not in create_stream_data:
                 err_message = "Source is empty"
-            if 'SourceUrls' in create_stream_data and len(create_stream_data["SourceUrls"]) == 0:
+            if 'SourceUrls' in create_stream_data and len(create_stream_data["SourceUrls"]) != 0:
                 if create_stream_data["SourceType"] != "PullVodPushLive":
                     err_message = "vod only support SourceType:PullVodPushLive"
                 if len(create_stream_data["Outputs"]["TargetUrls"]) != 1:
