@@ -1,10 +1,10 @@
 # coding:utf-8
 
 import json
-import os
+import os, stat
 import traceback
 import logging
-
+from etc.config import *
 from route.route import get_worker
 
 logger = logging.getLogger()
@@ -40,7 +40,7 @@ def main_handler(scf_event, scf_context):
 
         if worker is None:
             raise
-
+        os.chmod(ffmpeg_path, stat.S_IRWXO+stat.S_IRWXG+stat.S_IRWXU)
         before_api = worker.get('before')
         if before_api is not None and callable(before_api):
             before_api(scf_event)

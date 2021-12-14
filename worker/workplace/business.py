@@ -187,7 +187,10 @@ class MainHandler(BaseWorker):
         sig = FFmpegNormalTerminateSig
         monitor_control['ffmpeg_exit_by_monitor'] = False
         if self.task_struct.get("SourceUrls"):
-            self.ffmpeg_cmds()
+            if len(list(self.task_struct.get('SourceUrls'))) > 0:
+                self.ffmpeg_cmds()
+            else:
+                return
         else:
             self.ffmpeg_cmd()
 
@@ -279,7 +282,8 @@ class MainHandler(BaseWorker):
     def ffmpeg_cmd(self):
         pass
 
-    def ffmpeg_cmds(self):
+    def
+        (self):
         pass
 
     def event_handler_loop(self):
@@ -407,20 +411,21 @@ class MainHandler(BaseWorker):
                 time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 task_id=self.task_id,
             ))
-        try:
-            requests.request('POST', callback_url,
-                             data=json.dumps(data), timeout=5)
-            logger.info(msg='[{time} {task_id} CallbackSuccess {message}]'.format(
-                time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                task_id=self.task_id,
-                message=json.dumps(data)
-            ))
-        except Exception as e:
-            logger.info(msg='[{time} {task_id} CallbackFailed {message}]'.format(
-                time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                task_id=self.task_id,
-                message=print(traceback.print_exc())
-            ))
+        else:
+            try:
+                requests.request('POST', callback_url,
+                                 data=json.dumps(data), timeout=5)
+                logger.info(msg='[{time} {task_id} CallbackSuccess {message}]'.format(
+                    time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    task_id=self.task_id,
+                    message=json.dumps(data)
+                ))
+            except Exception as e:
+                logger.info(msg='[{time} {task_id} CallbackFailed {message}]'.format(
+                    time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    task_id=self.task_id,
+                    message=print(traceback.print_exc())
+                ))
 
 
 class VodToRtmpHandler(MainHandler):
@@ -458,9 +463,10 @@ class VodToRtmpHandler(MainHandler):
         self.ffmpeg_cmd_list = cmd.split(' ')
 
     def ffmpeg_cmds(self):
-        source_urls=self.task_struct.get('SourceUrls'),
+        source_urls=self.task_struct.get('SourceUrls')[0],
         stream_handler_duration = int(self.task_struct.get('StreamHandlerDuration'))
         stream_handler_start = int(self.task_struct.get('StreamHandlerStart'))
+        loop = int(self.task_struct.get('Loop'))
         transcode_params = self.task_struct.get('TranscodeParams')
         if stream_handler_duration == 0:
             offset_config = '-ss {handler_start}'.format(
@@ -479,9 +485,12 @@ class VodToRtmpHandler(MainHandler):
             os.remove(local_path)
         os.mknod(local_path)
         f = open(local_path, 'w')
-        for source_url in source_urls:
-            f.write("file "+ source_url)
-            f.write("\n")
+        logger.info("source_urls: %s", str(source_urls[0]))
+        for i in range(0, loop):
+            for source_url in source_urls[0]:
+                logger.info("source_url: %s", str(source_url))
+                f.write("file "+ source_url)
+                f.write("\n")
         cmd = cmd_origin.format(file_path=local_path,
                                 transcode_params=transcode_params,
                                 target_url=self.task_struct.get('TargetUrl'))
