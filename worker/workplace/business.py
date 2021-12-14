@@ -282,8 +282,7 @@ class MainHandler(BaseWorker):
     def ffmpeg_cmd(self):
         pass
 
-    def
-        (self):
+    def ffmpeg_cmds(self):
         pass
 
     def event_handler_loop(self):
