@@ -462,7 +462,7 @@ class VodToRtmpHandler(MainHandler):
         self.ffmpeg_cmd_list = cmd.split(' ')
 
     def ffmpeg_cmds(self):
-        source_urls=self.task_struct.get('SourceUrls')[0],
+        source_urls=self.task_struct.get('SourceUrls'),
         stream_handler_duration = int(self.task_struct.get('StreamHandlerDuration'))
         stream_handler_start = int(self.task_struct.get('StreamHandlerStart'))
         loop = int(self.task_struct.get('Loop'))
