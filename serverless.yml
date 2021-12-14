@@ -6,11 +6,8 @@ inputs:
     src: ./
     exclude:
       - .env
-      - node_modules/**
-      - dist/**
-      - scripts/**
   region: '${env:REGION}'
-  runtime: python3.6
+  runtime: Python3.6
   role: SCF_QcsRole
   memorySize: 256
   isAutoPublish: true
@@ -60,7 +57,7 @@ inputs:
   triggers:
     - type: apigw
       parameters:
-        name: web_record
+        name: '${app}-${name}-apigw'
         protocols:
           - http
           - https

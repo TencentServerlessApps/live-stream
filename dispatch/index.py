@@ -42,7 +42,7 @@ def main_handler(scf_event, scf_context):
             }
         else:
             data_raw = json.loads(scf_event.get('body', '{}'))
-            logger.info("data_raw:"+ data_raw)
+            logger.info("inputs data_raw:"+ str(data_raw))
             if data_raw == {}:
                 pass  # 这里应该抛出异常，但是由于数据是从云API输入的所以数据不能是{}
 
