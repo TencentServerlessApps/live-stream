@@ -2,6 +2,7 @@
 
 import json
 import os, stat
+import shutil
 import traceback
 import logging
 from etc.config import *
@@ -40,7 +41,9 @@ def main_handler(scf_event, scf_context):
 
         if worker is None:
             raise
-        #os.chmod(ffmpeg_path, stat.S_IRWXO+stat.S_IRWXG+stat.S_IRWXU)
+        if os.path.exists(ffmpeg_path):
+            shutil.copyfile(ffmpeg_path, ffmpeg_dst_path)
+            os.chmod(ffmpeg_dis_path, stat.S_IRWXO|stat.S_IRWXG|stat.S_IRWXU)
         before_api = worker.get('before')
         if before_api is not None and callable(before_api):
             before_api(scf_event)
