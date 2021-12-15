@@ -40,6 +40,8 @@ inputs:
       value: '${env:REDIS_INDEX}'
     - key: WOKER_NAME
       value: '${app}-${name}-worker'
+    - key: TZ
+      value: 'Asia/Shanghai'
   functions:
     - name: '${app}-${name}-dispatch'
       src: ./dispatch

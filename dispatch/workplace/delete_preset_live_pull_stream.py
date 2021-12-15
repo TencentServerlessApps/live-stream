@@ -62,7 +62,7 @@ class DeletePresetLivePullStreamTaskWorker(BaseWorker):
         self.redis_client.zrem(key=PushLiveJobsSet, list_of_value=[job_id])
 
         now = int(time.time())
-        if now < preset_time:
+        if now < int(preset_time):
             resp = self.delete_timer(job_name, preset_time)
             if not resp['success']:
                 error_message = resp['err_msg']
@@ -70,8 +70,8 @@ class DeletePresetLivePullStreamTaskWorker(BaseWorker):
 
     def delete_timer(self, job_name, preset_time):
         worker_params = {
-            'FunctionName': 'livestream_dispatch',
-            'Namespace': os.environ.get('WorkerNameSpace'),
+            'FunctionName': os.environ.get('SCF_FUNCTIONNAME'),
+            'Namespace': os.environ.get('SCF_NAMESPACE'),
             'Type': 'timer',
             'TriggerName': '{name}_{time}'.format(name=job_name, time=str(preset_time)),
         }

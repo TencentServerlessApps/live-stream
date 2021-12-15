@@ -262,7 +262,7 @@ class CreateLivePullStreamTaskWorker(BaseWorker):
         worker_params = {
             'FunctionName': os.environ.get('WOKER_NAME'),
             'Event': json.dumps(event),
-            'Namespace': "default"
+            'Namespace': os.environ.get('SCF_NAMESPACE')
         }
 
         resp = qcloud_caller('InvokeFunction', worker_params)
