@@ -45,8 +45,6 @@ inputs:
       src: ./dispatch
       handler: index.main_handler
       memorySize: 512
-      asyncRunEnable: true
-      traceEnable: true
     - name: '${app}-${name}-worker'
       src: ./worker
       handler: index.main_handler
