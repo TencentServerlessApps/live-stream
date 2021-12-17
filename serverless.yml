@@ -57,7 +57,7 @@ inputs:
   triggers:
     - type: apigw
       parameters:
-        name: '${app}-${name}-apigw'
+        name: live_stream
         protocols:
           - http
           - https
