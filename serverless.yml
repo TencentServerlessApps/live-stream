@@ -50,7 +50,7 @@ inputs:
     - name: '${app}-${name}-worker'
       src: ./worker
       handler: index.main_handler
-      memorySize: 512
+      memorySize: 1024
       timeout: 7200
       asyncRunEnable: true
       traceEnable: true
